@@ -110,9 +110,6 @@ porcupine = pvporcupine.create(
   model_path='keyword/porcupine_params_zh.pv'
 )
 
-for i, device in enumerate(PvRecorder.get_audio_devices()):
-    print(f'Device {i}: {device}')
-
 recorder = PvRecorder(
     device_index=-1,
     frame_length=porcupine.frame_length
