@@ -128,7 +128,7 @@ def recv_loop():
             str = stt()
             if str is None:
                 tts('未接收到指令')
-            if '傳送訊息' in str:
+            elif '傳送訊息' in str:
                 tts('請說訊息')
                 str = stt()
                 if str is not None:
