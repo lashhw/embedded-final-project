@@ -1,0 +1,6 @@
+discord.py
+gTTS
+pvporcupine
+pvrecorder
+SpeechRecognition
+pyaudio
