@@ -20,11 +20,14 @@ EMERGENCY_CHANNEL = 1094171915519791144
 q = queue.Queue()
 
 
-def tts(text):
+def tts(text, block=True):
     #print(f'output: {text}')
     filename = tempfile.mktemp()
     gTTS(text, lang='zh-TW').save(filename)
-    os.system(f'ffplay -autoexit {filename} > /dev/null 2>&1 && rm {filename} &')
+    command = f'ffplay -autoexit {filename} > /dev/null 2>&1 && rm {filename}'
+    if not block:
+        command += ' &'
+    os.system(command)
 
 
 class MyClient(discord.Client):
@@ -42,11 +45,11 @@ class MyClient(discord.Client):
         while not q.empty():
             front = q.get_nowait()
             if front[0] == 'send_from':
-                tts(front[1])
+                tts(front[1], False)
                 await front[2].edit(content=f'已傳送「{front[1]}」')
             elif front[0] == 'send_to':
                 await self.conv_channel.send(front[1])
-                tts('已傳送訊息')
+                tts('已傳送訊息', False)
             elif front[0] == 'get_location':
                 await front[1].edit(content='當前位置為')
     
