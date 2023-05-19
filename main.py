@@ -11,7 +11,6 @@ import tempfile
 import pvporcupine
 from pvrecorder import PvRecorder
 import speech_recognition as sr
-from ctypes import *
 
 
 GUILD = discord.Object(id=1094156105606778940)
@@ -83,14 +82,6 @@ async def get_location(interaction: discord.Interaction):
     q.put(['get_location', msg])
 
 
-ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p, c_int, c_char_p, c_int, c_char_p)
-def py_error_handler(filename, line, function, err, fmt):
-    pass
-c_error_handler = ERROR_HANDLER_FUNC(py_error_handler)
-asound = cdll.LoadLibrary('libasound.so')
-asound.snd_lib_error_set_handler(c_error_handler)
-
-
 def stt():
     '''
     i, _, _ = select.select([sys.stdin], [], [], timeout=10)
@@ -99,10 +90,10 @@ def stt():
     else:
         return None
     '''
-    print(sr.Microphone.list_working_microphones())
     r = sr.Recognizer()
     text = None
     with sr.Microphone() as source:
+        r.adjust_for_ambient_noise(source)
         audio = r.listen(source)
         try:
             text = r.recognize_google(audio, language='zh-TW')
