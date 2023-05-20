@@ -4,3 +4,6 @@ pvporcupine
 pvrecorder
 SpeechRecognition
 pyaudio
+
+imusensor
+pynmea2
