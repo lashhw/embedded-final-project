@@ -6,4 +6,7 @@ SpeechRecognition
 pyaudio
 
 imusensor
+smbus
+numpy
+easydict
 pynmea2
