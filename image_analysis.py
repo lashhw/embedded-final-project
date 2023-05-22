@@ -1,6 +1,7 @@
 import http
 import json
 import tempfile
+import os
 
 
 headers = {
@@ -36,5 +37,7 @@ def image_analysis(camera):
         conn.close()
     except Exception as e:
         print(f"[Error] {e}") 
+
+    os.system(f"rm -f {filename}")
 
     return result
