@@ -4,6 +4,7 @@ pvporcupine
 pvrecorder
 SpeechRecognition
 pyaudio
+picamera
 
 imusensor
 smbus

@@ -1,10 +1,11 @@
 import pvporcupine
 from pvrecorder import PvRecorder
+import tempfile
 from stt import stt
 from tts import tts
 
 
-def speech_loop(q):
+def speech_loop(q, camera):
     porcupine = pvporcupine.create(
         access_key="O+W0Bvushxv3+glLzhqPbSxmh5yYVbmxqCKG8gcFNxtyMdI+N+bOjQ==",
         keyword_paths=["keyword/pi.ppn"],
@@ -31,6 +32,10 @@ def speech_loop(q):
                     q.put_nowait(["send_to", str])
                 else:
                     tts("未接收到訊息")
+            elif "拍照" in str:
+                filename = f"{tempfile.mktemp()}.png"
+                camera.capture(filename)
+                q.put_nowait(["send_picture", filename])
             else:
                 tts("未知指令")
             recorder.start()

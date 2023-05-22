@@ -1,4 +1,5 @@
 import discord
+import os
 from discord import app_commands
 from discord.ext import tasks
 from tts import tts
@@ -33,7 +34,10 @@ class MyClient(discord.Client):
                 await front[2].edit(content=f"已傳送「{front[1]}」")
             elif front[0] == "send_to":
                 await self.conv_channel.send(front[1])
-                tts("已傳送訊息", False)
+            elif front[0] == "send_picture":
+                await self.conv_channel.send(file=discord.File(front[1]))
+                os.system(f"rm -f {front[1]}")
+                tts("已傳送照片", False)
             elif front[0] == "get_location":
                 await front[1].edit(content="當前位置為")
 
