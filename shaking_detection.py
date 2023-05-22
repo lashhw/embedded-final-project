@@ -45,6 +45,12 @@ class ShakingDetector:
         self.prev_accel = cur_accel
 
 
+def shaking_detect_loop(q):
+    sd = ShakingDetector()
+    while True:
+        sd.detect(q)
+
+
 if __name__ == "__main__":
     detector = ShakingDetector()
     while True:
