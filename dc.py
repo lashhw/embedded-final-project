@@ -20,6 +20,10 @@ class MyClient(discord.Client):
         await self.tree.sync(guild=GUILD)
         self.proc_loop.start()
 
+    async def on_ready(self):
+        print(f"Logged in as {self.user} (ID: {self.user.id})")
+        print("------")
+
     @tasks.loop(seconds=1)
     async def proc_loop(self):
         while not self.q.empty():
@@ -42,11 +46,6 @@ class MyClient(discord.Client):
 
 def run_discord_bot(q):
     client = MyClient(q, discord.Intents.default())
-
-    @client.event
-    async def on_ready():
-        print(f"Logged in as {client.user} (ID: {client.user.id})")
-        print("------")
 
     @client.tree.command()
     @app_commands.describe(text="要傳送的訊息")
