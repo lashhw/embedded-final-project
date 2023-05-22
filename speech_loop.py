@@ -31,12 +31,14 @@ def speech_loop(q, camera):
                 str = stt()
                 if str is not None:
                     q.put_nowait(["send_to", str])
+                    tts("已傳送訊息")
                 else:
                     tts("未接收到訊息")
             elif "傳送照片" in str:
                 filename = f"{tempfile.mktemp()}.png"
                 camera.capture(filename)
                 q.put_nowait(["send_picture", filename])
+                tts("已傳送照片")
             elif "描述照片" in str:
                 result = image_analysis(camera)
                 tts(result["caption"], lang="en")
