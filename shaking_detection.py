@@ -38,7 +38,7 @@ class ShakingDetector:
             self.irregular_times = 0
 
         if self.irregular_times >= 2:
-            q.put_nowait(["send_to", "偵測到異常震動"])
+            q.put_nowait(["shaking"])
 
             # print(f"roll: {imu.roll} ; pitch : {imu.pitch} ; yaw : {imu.yaw}")
         time.sleep(0.1)

@@ -40,6 +40,8 @@ class MyClient(discord.Client):
                 tts("已傳送照片", False)
             elif front[0] == "get_location":
                 await front[1].edit(content="當前位置為")
+            elif front[0] == "shaking":
+                await self.emer_channel.send("出事了阿伯")
 
     @proc_loop.before_loop
     async def before_proc_loop(self):
