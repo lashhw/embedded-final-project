@@ -1,5 +1,5 @@
-import http.client
-import urllib.parse
+import http
+import urllib
 import json
 from operator import itemgetter
 

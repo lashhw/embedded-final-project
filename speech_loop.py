@@ -1,6 +1,7 @@
 import pvporcupine
 from pvrecorder import PvRecorder
 import tempfile
+from image_analysis import image_analysis
 from stt import stt
 from tts import tts
 
@@ -32,10 +33,25 @@ def speech_loop(q, camera):
                     q.put_nowait(["send_to", str])
                 else:
                     tts("未接收到訊息")
-            elif "拍照" in str:
+            elif "傳送照片" in str:
                 filename = f"{tempfile.mktemp()}.png"
                 camera.capture(filename)
                 q.put_nowait(["send_picture", filename])
+            elif "描述照片" in str:
+                result = image_analysis(camera)
+                tts(result["caption"], lang="en")
+            elif "物件偵測" in str:
+                result = image_analysis(camera)
+                if len(result["objects"]) == 0:
+                    text = "No object is detected."
+                else:
+                    text = f'I see {", ".join(result["objects"])}. '
+                    if result["people_count"] != 0:
+                        text += f'Totally {result["people_count"]} people are detected.'
+                tts(text, lang="en")
+            elif "圖片轉文字" in str:
+                result = image_analysis(camera)
+                tts(result["text"])
             else:
                 tts("未知指令")
             recorder.start()
