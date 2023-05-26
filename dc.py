@@ -2,6 +2,7 @@ import discord
 import os
 from discord import app_commands
 from discord.ext import tasks
+from get_gps import get_gps
 
 
 GUILD = discord.Object(id=1094156105606778940)
@@ -37,7 +38,8 @@ class MyClient(discord.Client):
                 await self.conv_channel.send(file=discord.File(front[1]))
                 os.system(f"rm -f {front[1]}")
             elif front[0] == "get_location":
-                await front[1].edit(content="當前位置為")
+                pos = await get_gps()
+                await front[1].edit(content=f"當前位置為 {pos}")
             elif front[0] == "shaking":
                 await self.emer_channel.send("出事了阿伯")
             else:
