@@ -1,31 +1,32 @@
 import serial
 import pynmea2
 
+
 def port_setup(port):
     ser = serial.Serial(port, baudrate=9600, timeout=2)
     return ser
 
-def parseGPSdata(ser):
-        keywords = ["$GPRMC","$GPGGA"]
-        gps_data = ser.readline()
-        gps_data = gps_data.decode("utf-8")  # transform data into plain string
 
-        if len(gps_data) > 5:  # Check to see if the GPS gave any useful data
-            if gps_data[0:6] in keywords:   # Check t see if the message code
-                gps_msg = pynmea2.parse(gps_data)
-                lat = gps_msg.latitude
-                lng = gps_msg.longitude
-                return (lat,lng)
-            else:
-                return None
+def parseGPSdata(ser):
+    keywords = ["$GPRMC", "$GPGGA"]
+    gps_data = ser.readline()
+    gps_data = gps_data.decode("utf-8")  # transform data into plain string
+
+    if len(gps_data) > 5:  # Check to see if the GPS gave any useful data
+        if gps_data[0:6] in keywords:  # Check t see if the message code
+            gps_msg = pynmea2.parse(gps_data)
+            lat = gps_msg.latitude
+            lng = gps_msg.longitude
+            return (lat, lng)
         else:
             return None
+    else:
+        return None
 
 
 if __name__ == "__main__":
-
     # access serial port
-    gps_port = "/dev/serial0"
+    gps_port = "/dev/ttyUSB0"
     ser = port_setup(gps_port)
 
     # Print out GPS cordinates
