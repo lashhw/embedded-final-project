@@ -1,13 +1,15 @@
 import pvporcupine
 from pvrecorder import PvRecorder
 import tempfile
-from image_analysis import image_analysis
+from image_analysis import ImageAnalyst
 from location_utils import get_current_address
 from stt import stt
 from tts import tts
 
 
 def speech_loop(q, camera):
+    image_analyst = ImageAnalyst()
+
     porcupine = pvporcupine.create(
         access_key="O+W0Bvushxv3+glLzhqPbSxmh5yYVbmxqCKG8gcFNxtyMdI+N+bOjQ==",
         keyword_paths=["keyword/pi.ppn"],
@@ -23,7 +25,9 @@ def speech_loop(q, camera):
 
         if result >= 0:
             recorder.stop()
+
             tts("請說指令")
+
             str = stt()
             if str is None:
                 tts("未接收到指令")
@@ -44,10 +48,10 @@ def speech_loop(q, camera):
                 address = get_current_address()
                 tts(f"當前位置為 {address}")
             elif "描述照片" in str:
-                result = image_analysis(camera)
+                result = image_analyst.analysis()
                 tts(result["caption"], lang="en")
             elif "物件偵測" in str:
-                result = image_analysis(camera)
+                result = image_analyst.analysis()
                 if len(result["objects"]) == 0:
                     text = "No object is detected."
                 else:
@@ -56,8 +60,9 @@ def speech_loop(q, camera):
                         text += f'Totally {result["people_count"]} people are detected.'
                 tts(text, lang="en")
             elif "圖片轉文字" in str:
-                result = image_analysis(camera)
+                result = image_analyst.analysis()
                 tts(result["text"])
             else:
                 tts("未知指令")
+
             recorder.start()
