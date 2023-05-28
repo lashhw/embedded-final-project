@@ -11,3 +11,5 @@ smbus
 numpy
 easydict
 pynmea2
+
+geopy
