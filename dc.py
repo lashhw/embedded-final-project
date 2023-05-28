@@ -1,5 +1,5 @@
-import discord
 import os
+import discord
 from discord import app_commands
 from discord.ext import tasks
 from location_utils import get_current_address

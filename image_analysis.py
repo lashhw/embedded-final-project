@@ -1,8 +1,8 @@
+import os
 import http
 import json
 import tempfile
 import picamera
-import os
 
 
 class ImageAnalyst:

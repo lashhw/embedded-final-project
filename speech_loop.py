@@ -1,10 +1,35 @@
+import os
 import pvporcupine
-from pvrecorder import PvRecorder
+import speech_recognition as sr
 import tempfile
+from pvrecorder import PvRecorder
+from gtts import gTTS
 from image_analysis import ImageAnalyst
 from location_utils import get_current_address
-from stt import stt
-from tts import tts
+
+
+def stt():
+    r = sr.Recognizer()
+    text = None
+    with sr.Microphone() as source:
+        r.adjust_for_ambient_noise(source)
+        audio = r.listen(source)
+        try:
+            text = r.recognize_google(audio, language="zh-TW")
+            print(f'you said "{text}"')
+        except sr.UnknownValueError:
+            print("could not understand")
+        except sr.RequestError as e:
+            print(e)
+    return text
+
+
+def tts(text, lang="zh-TW"):
+    print(f'speaking "{text}"')
+    filename = tempfile.mktemp()
+    gTTS(text, lang=lang).save(filename)
+    command = f"ffplay -autoexit {filename} > /dev/null 2>&1 && rm {filename}"
+    os.system(command)
 
 
 def speech_loop(q, camera):
