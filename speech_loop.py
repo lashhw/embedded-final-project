@@ -40,7 +40,7 @@ def speech_loop(q, camera):
                 camera.capture(filename)
                 q.put_nowait(["send_picture", filename])
                 tts("已傳送照片")
-            elif "當前位置" in str:
+            elif "當前位置" in str or "我在哪" in str:
                 address = get_current_address()
                 tts(f"當前位置為 {address}")
             elif "描述照片" in str:
