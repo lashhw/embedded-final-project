@@ -13,3 +13,7 @@ easydict
 pynmea2
 
 geopy
+
+google-assistant-sdk[samples]
+google-auth-oauthlib[tool]
+protobuf==3.20.*

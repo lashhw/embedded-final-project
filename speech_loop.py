@@ -6,6 +6,7 @@ from pvrecorder import PvRecorder
 from gtts import gTTS
 from image_analysis import ImageAnalyst
 from location_utils import get_current_address
+import os
 
 
 def stt():
@@ -87,6 +88,9 @@ def speech_loop(q, camera):
             elif "圖片轉文字" in str:
                 result = image_analyst.analysis()
                 tts(result["text"])
+            elif "google" in str.lower():
+                tts("請說")
+                os.system("googlesamples-assistant-pushtotalk --once")
             else:
                 tts("未知指令")
 
