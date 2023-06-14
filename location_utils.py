@@ -1,5 +1,5 @@
 import json
-import asyncio
+import subprocess
 from geopy.geocoders import Nominatim
 
 
@@ -16,26 +16,15 @@ def get_current_address():
     return address
 
 
-async def get_gps_reading():
-    proc = await asyncio.create_subprocess_shell(
-        "gpspipe -x 5 -w | grep -m 1 lat",
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-    )
-
-    stdout, stderr = await proc.communicate()
+def get_gps_reading():
+    out = subprocess.getoutput("gpspipe -x 5 -w | grep -m 1 lat")
 
     try:
-        json_data = json.loads(stdout.decode())
+        json_data = json.loads(out)
         return json_data["lat"], json_data["lon"]
     except:
         return None
 
 
-async def test():
-    ret = await get_gps_reading()
-    print(ret)
-
-
 if __name__ == "__main__":
-    asyncio.run(test())
+    print(get_gps_reading())
