@@ -31,7 +31,8 @@ class MyClient(discord.Client):
         while not self.q.empty():
             front = self.q.get_nowait()
             if front[0] == "send_from":
-                tts("收到訊息" + front[1])
+                tts("收到訊息")
+                tts(front[1])
                 await front[2].edit(content=f"已傳送「{front[1]}」")
             elif front[0] == "send_to":
                 await self.conv_channel.send(front[1])
