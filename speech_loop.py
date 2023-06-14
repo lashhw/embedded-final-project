@@ -77,7 +77,7 @@ def speech_loop(q, camera):
                 result = image_analyst.analysis(camera)
                 tts(result["caption"], lang="en")
             elif "物件偵測" in str:
-                result = image_analyst.analysis()
+                result = image_analyst.analysis(camera)
                 if len(result["objects"]) == 0:
                     text = "No object is detected."
                 else:
@@ -86,7 +86,7 @@ def speech_loop(q, camera):
                         text += f'Totally {result["people_count"]} people are detected.'
                 tts(text, lang="en")
             elif "圖片轉文字" in str:
-                result = image_analyst.analysis()
+                result = image_analyst.analysis(camera)
                 tts(result["text"])
             elif "google" in str.lower():
                 tts("請說")
