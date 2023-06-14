@@ -3,7 +3,7 @@ import asyncio
 from geopy.geocoders import Nominatim
 
 
-async def get_current_address():
+def get_current_address():
     lat, lon = get_gps_reading()
 
     geolocation = Nominatim(user_agent="geotest")

@@ -40,7 +40,7 @@ class MyClient(discord.Client):
                 await self.conv_channel.send(file=discord.File(front[1]))
                 os.system(f"rm -f {front[1]}")
             elif front[0] == "get_location":
-                address = await get_current_address()
+                address = get_current_address()
                 await front[1].edit(content=f"當前位置為 {address}")
             elif front[0] == "shaking":
                 await self.emer_channel.send("出事了阿伯")
