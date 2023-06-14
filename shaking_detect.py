@@ -31,7 +31,7 @@ class ShakingDetector:
         delta_accel = np.sqrt(np.sum(np.power(accel_diff, 2)))
 
         # print(f"Accel x: {imu.AccelVals[0]} ; Accel y : {imu.AccelVals[1]} ; Accel z : {imu.AccelVals[2]}")
-        if delta_accel > 20:
+        if delta_accel > 15:
             self.irregular_times += 1
             print(f"delta acceleration: {delta_accel}")
         else:
