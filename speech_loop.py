@@ -74,7 +74,7 @@ def speech_loop(q, camera):
                 address = get_current_address()
                 tts(f"當前位置為 {address}")
             elif "描述照片" in str:
-                result = image_analyst.analysis()
+                result = image_analyst.analysis(camera)
                 tts(result["caption"], lang="en")
             elif "物件偵測" in str:
                 result = image_analyst.analysis()

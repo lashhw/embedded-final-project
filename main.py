@@ -3,13 +3,15 @@ import threading
 from speech_loop import speech_loop
 from shaking_detect import shaking_detect_loop
 from dc import run_discord_bot
+import picamera
 
 
 class AssistanceSystem:
     def __init__(self):
+        self.camera = picamera.PiCamera()
         self.q = queue.Queue()
         self.speech_thread = threading.Thread(
-            target=speech_loop, args=(self.q,), daemon=True
+            target=speech_loop, args=(self.q, self.camera), daemon=True
         )
         self.shaking_detect_thread = threading.Thread(
             target=shaking_detect_loop, args=(self.q,), daemon=True

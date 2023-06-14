@@ -2,21 +2,19 @@ import os
 import http
 import json
 import tempfile
-import picamera
 
 
 class ImageAnalyst:
     def __init__(self):
-        self.camera = picamera.PiCamera()
         self.headers = {
             "Content-Type": "application/octet-stream",
             "Ocp-Apim-Subscription-Key": "69f845d5046744b78057cc952245e1ac",
         }
         self.PEOPLE_CONFIDENCE_THRESHOLD = 0.8
 
-    def analysis(self):
+    def analysis(self, camera):
         filename = f"{tempfile.mktemp()}.png"
-        self.camera.capture(filename)
+        camera.capture(filename)
         result = None
 
         try:
